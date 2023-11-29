@@ -29,15 +29,18 @@ AddressBook.prototype.deleteContact = function (id) {
 };
 
 // Business Logic for Contacts ---------
-function Contact(firstName, lastName, phoneNumber, emailAddress) {
+function Contact(firstName, lastName, phoneNumber, emailAddress, physicalAddress) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
   this.emailAddress = emailAddress;
+  this.physicalAddress = physicalAddress;
 }
 
+
+
 Contact.prototype.fullName = function () {
-  return this.firstName + " " + this.lastName + "." + " Email Address: " + this.emailAddress;
+  return this.firstName + " " + this.lastName + "." + " Email Address: " + this.emailAddress + ". " + "Address: " + this.physicalAddress;
 };
 
 // User Interface Logic ---------
@@ -57,6 +60,10 @@ function listContacts(addressBookToDisplay) {
   contactsDiv.append(ul);
 }
 
+function displayContactDetails() {
+  console.log("The id of this <li> is " + event.target.id + ".");
+}
+
 
 function handleFormSubmission(event) {
   event.preventDefault();
@@ -64,11 +71,13 @@ function handleFormSubmission(event) {
   const inputtedLastName = document.querySelector("input#new-last-name").value;
   const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
   const inputtedEmail = document.querySelector("input#new-email").value;
-  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail);
+  const inputtedPhysicalAddress = document.querySelector("input#physical-address").value;
+  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedPhysicalAddress);
   addressBook.addContact(newContact);
   listContacts(addressBook);
 }
 
 window.addEventListener("load", function () {
   document.querySelector("form#new-contact").addEventListener("submit", handleFormSubmission);
+  document.querySelector("div#contacts").addEventListener("click", displayContactDetails); 
 });
